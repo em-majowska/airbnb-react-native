@@ -5,7 +5,9 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
+  Pressable,
 } from "react-native";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useState } from "react";
 import Header from "./components/Header";
 
@@ -13,6 +15,8 @@ import colors from "../assets/colors/main.json";
 import Button from "./components/Button";
 import ErrorText from "./components/ErrorText";
 import axios from "axios";
+import Constants from "expo-constants";
+import { StatusBar } from "expo-status-bar";
 
 const router = useRouter();
 
@@ -21,6 +25,7 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [pwdHidden, setPwdHidden] = useState(true);
 
   const onSubmit = () => {
     const fetchData = async () => {
@@ -69,14 +74,23 @@ export default function SignIn() {
           onChangeText={setEmail}
           placeholderTextColor={colors.lightgrey}
         />
-        <TextInput
-          style={styles.input}
-          placeholder="password"
-          value={password}
-          onChangeText={setPassword}
-          placeholderTextColor={colors.lightgrey}
-          secureTextEntry
-        />
+
+        <View style={styles.input}>
+          <TextInput
+            style={styles.inputPassword}
+            placeholder="password"
+            value={password}
+            onChangeText={setPassword}
+            placeholderTextColor={colors.lightgrey}
+            secureTextEntry={pwdHidden}
+          />
+          <Pressable
+            onPress={() => {
+              setPwdHidden(!pwdHidden);
+            }}>
+            <FontAwesome name="eye" size={24} color={colors.grey} />
+          </Pressable>
+        </View>
       </View>
 
       <View>
@@ -88,10 +102,11 @@ export default function SignIn() {
           disabled={isLoading}
         />
 
-        <Link href="/signup" style={styles.link}>
+        <Link href="/SignUp" style={styles.link}>
           No account ? Register
         </Link>
       </View>
+      <StatusBar style="dark" />
     </KeyboardAvoidingView>
   );
 }
@@ -102,8 +117,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "center",
     paddingInline: 40,
-    paddingBlock: 20,
+    paddingBlock: 40,
     gap: 20,
+    marginBlockStart: Constants.statusBarHeight,
   },
   text: {
     color: colors.grey,
@@ -112,12 +128,19 @@ const styles = StyleSheet.create({
     width: "100%",
     gap: 20,
   },
-  input: {
+
+  inputPassword: {
     width: "100%",
+    flex: 1,
+  },
+  input: {
     paddingBlock: 5,
     borderBottomColor: colors.lightpink,
     borderBottomWidth: 2,
     textDecorationStyle: "none",
+    flexDirection: "row",
+    gap: 10,
+    alignItems: "center",
   },
 
   link: {

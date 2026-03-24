@@ -5,14 +5,18 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
+  Pressable,
 } from "react-native";
 import { useState } from "react";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Header from "./components/Header";
 
 import colors from "../assets/colors/main.json";
 import Button from "./components/Button";
 import ErrorText from "./components/ErrorText";
 import axios from "axios";
+import Constants from "expo-constants";
+import { StatusBar } from "expo-status-bar";
 
 const router = useRouter();
 
@@ -24,6 +28,8 @@ export default function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [pwdHidden, setPwdHidden] = useState(true);
+  const [confirmPwdHidden, setConfirmPwdHidden] = useState(true);
 
   const onSubmit = () => {
     const fetchData = async () => {
@@ -97,22 +103,39 @@ export default function SignUp() {
           textAlignVertical="top"
         />
 
-        <TextInput
-          style={styles.input}
-          placeholder="password"
-          value={password}
-          onChangeText={setPassword}
-          placeholderTextColor={colors.lightgrey}
-          secureTextEntry
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="confirm password"
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-          placeholderTextColor={colors.lightgrey}
-          secureTextEntry
-        />
+        <View style={styles.input}>
+          <TextInput
+            style={styles.inputPassword}
+            placeholder="password"
+            value={password}
+            onChangeText={setPassword}
+            placeholderTextColor={colors.lightgrey}
+            secureTextEntry={pwdHidden}
+          />
+          <Pressable
+            onPress={() => {
+              setPwdHidden(!pwdHidden);
+            }}>
+            <FontAwesome name="eye" size={24} color={colors.grey} />
+          </Pressable>
+        </View>
+
+        <View style={styles.input}>
+          <TextInput
+            style={styles.inputPassword}
+            placeholder="confirm password"
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            placeholderTextColor={colors.lightgrey}
+            secureTextEntry={confirmPwdHidden}
+          />
+          <Pressable
+            onPress={() => {
+              setConfirmPwdHidden(!confirmPwdHidden);
+            }}>
+            <FontAwesome name="eye" size={24} color={colors.grey} />
+          </Pressable>
+        </View>
       </View>
 
       <View style={styles.section}>
@@ -123,10 +146,11 @@ export default function SignUp() {
           isLoading={isLoading}
           disabled={isLoading}
         />
-        <Link href="/index" style={styles.link}>
+        <Link href="/SignIn" style={styles.link}>
           Already have an account ? Sign in
         </Link>
       </View>
+      <StatusBar style="dark" />
     </KeyboardAvoidingView>
   );
 }
@@ -137,8 +161,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "center",
     paddingInline: 40,
-    paddingBlock: 20,
+    paddingBlock: 40,
     gap: 20,
+    marginBlockStart: Constants.statusBarHeight,
   },
   text: {
     color: colors.grey,
@@ -147,11 +172,19 @@ const styles = StyleSheet.create({
     width: "100%",
     gap: 20,
   },
+
+  inputPassword: {
+    width: "100%",
+    flex: 1,
+  },
   input: {
     paddingBlock: 5,
-    borderColor: colors.lightpink,
+    borderBottomColor: colors.lightpink,
     borderBottomWidth: 2,
     textDecorationStyle: "none",
+    flexDirection: "row",
+    gap: 10,
+    alignItems: "center",
   },
   inputMultiline: {
     borderWidth: 2,
