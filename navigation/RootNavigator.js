@@ -4,15 +4,17 @@ import { AuthContext } from "../context/AuthContext";
 
 export default function RootNavigator() {
   const { userToken, userId } = useContext(AuthContext);
+  console.log(userToken);
+  console.log(userId);
 
   return (
-    <Stack>
-      <Stack.Protected guard={!userToken || !userId}>
-        <Stack.Screen name="index" />
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Protected guard={userToken}>
+        <Stack.Screen name="/login" />
       </Stack.Protected>
 
-      <Stack.Protected guard={userToken && userId}>
-        <Stack.Screen name="home/rooms" />
+      <Stack.Protected guard={userToken}>
+        <Stack.Screen name="/home/rooms" />
       </Stack.Protected>
     </Stack>
   );

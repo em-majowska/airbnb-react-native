@@ -6,7 +6,7 @@ import {
   Platform,
   ScrollView,
 } from "react-native";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import Constants from "expo-constants";
 import { StatusBar } from "expo-status-bar";
@@ -29,7 +29,8 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [pwdHidden, setPwdHidden] = useState(true);
 
-  const { setUserToken, setUserId } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
+
   const onSubmit = () => {
     const fetchData = async () => {
       try {
@@ -41,8 +42,7 @@ export default function LoginPage() {
           },
         );
 
-        setUserToken(response.data.token);
-        setUserId(response.data.id);
+        login(response.data.token, response.data.id);
         router.navigate("home/rooms");
       } catch (error) {
         error.message && setErrorMessage(error.message);

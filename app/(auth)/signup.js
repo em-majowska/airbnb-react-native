@@ -32,7 +32,7 @@ export default function SignupPage() {
   const [pwdHidden, setPwdHidden] = useState(true);
   const [confirmPwdHidden, setConfirmPwdHidden] = useState(true);
 
-  const { setUserToken, setUserId } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
 
   const onSubmit = () => {
     const fetchData = async () => {
@@ -47,8 +47,7 @@ export default function SignupPage() {
           },
         );
 
-        setUserToken(response.data.token);
-        setUserId(response.data.id);
+        login(response.data.token, response.data.id);
         router.navigate("home/rooms");
       } catch (error) {
         error.message && setErrorMessage(error.message);

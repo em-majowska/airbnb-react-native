@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { AuthContextProvider } from "../context/AuthContext";
 import RootNavigator from "../navigation/RootNavigator";
 
@@ -7,5 +8,4 @@ export default function Layout() {
       <RootNavigator />
     </AuthContextProvider>
   );
-  // return <Stack screenOptions={{ headerShown: false }} />;
 }
