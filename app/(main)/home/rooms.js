@@ -1,6 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import Constants from "expo-constants";
 import Logo from "../../../components/Logo";
 import colors from "../../../assets/colors/main.json";
@@ -28,9 +34,7 @@ const rooms = () => {
     fetchData();
   }, []);
 
-  return isLoading ? (
-    <Text>Loading...</Text>
-  ) : (
+  return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Logo type="sm" />
@@ -39,7 +43,9 @@ const rooms = () => {
         style={styles.list}
         data={data}
         keyExtractor={(item) => String(item._id)}
-        renderItem={({ item }) => <RoomOffer item={item} />}
+        renderItem={({ item }) =>
+          isLoading ? <ActivityIndicator /> : <RoomOffer item={item} />
+        }
       />
     </View>
   );
