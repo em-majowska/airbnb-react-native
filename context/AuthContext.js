@@ -5,6 +5,7 @@ export const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const [userId, setUserId] = useState(null);
   const [userToken, setUserToken] = useState(null);
+
   useEffect(() => {
     const loadToken = async () => {
       const token = await AsyncStorage.getItem("aut");

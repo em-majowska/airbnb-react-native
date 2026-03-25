@@ -2,20 +2,19 @@ import { Stack } from "expo-router";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
-export default function RootNavigator() {
+const RootNavigator = () => {
   const { userToken, userId } = useContext(AuthContext);
-  console.log(userToken);
-  console.log(userId);
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Protected guard={userToken}>
-        <Stack.Screen name="/login" />
+      <Stack.Protected guard={!userToken || !userId}>
+        <Stack.Screen name="(auth)" />
       </Stack.Protected>
 
-      <Stack.Protected guard={userToken}>
-        <Stack.Screen name="/home/rooms" />
+      <Stack.Protected guard={userToken && userId}>
+        <Stack.Screen name="(main)" />
       </Stack.Protected>
     </Stack>
   );
-}
+};
+export default RootNavigator;
