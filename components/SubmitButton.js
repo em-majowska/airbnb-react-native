@@ -1,7 +1,7 @@
 import { ActivityIndicator, Pressable, StyleSheet, Text } from "react-native";
-import colors from "../../assets/colors/main.json";
+import colors from "../assets/colors/main.json";
 
-const Button = ({ title, onPress, isLoading, disabled }) => {
+const SubmitButton = ({ title, onPress, isLoading, disabled }) => {
   return (
     <Pressable style={styles.button} onPress={onPress} disabled={disabled}>
       {isLoading ? (
@@ -28,4 +28,4 @@ const styles = StyleSheet.create({
     color: colors.grey,
   },
 });
-export default Button;
+export default SubmitButton;
