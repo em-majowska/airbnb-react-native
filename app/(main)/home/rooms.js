@@ -1,16 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  FlatList,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
 import Constants from "expo-constants";
-import Logo from "../../../components/Logo";
 import colors from "../../../assets/colors/main.json";
 import RoomOffer from "../../../components/RoomOffer";
+import Header from "../../../components/Header";
+import { Link } from "expo-router";
 
 const rooms = () => {
   const [data, setData] = useState(null);
@@ -36,15 +31,19 @@ const rooms = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Logo type="sm" />
-      </View>
+      <Header />
       <FlatList
         style={styles.list}
         data={data}
         keyExtractor={(item) => String(item._id)}
         renderItem={({ item }) =>
-          isLoading ? <ActivityIndicator /> : <RoomOffer item={item} />
+          isLoading ? (
+            <ActivityIndicator />
+          ) : (
+            <Link href={`/home/room?id=${item._id}`} style={styles.link}>
+              <RoomOffer item={item} />
+            </Link>
+          )
         }
       />
     </View>
@@ -57,16 +56,12 @@ const styles = StyleSheet.create({
     justifyContent: "start",
     alignItems: "center",
   },
-  header: {
-    width: "100%",
-    marginTop: Constants.statusBarHeight,
-    paddingBlock: 10,
-    borderBottomWidth: 2,
-    borderColor: colors.lightgrey,
-    alignItems: "center",
-  },
   list: {
     paddingBlockEnd: "50",
+  },
+  link: {
+    borderBottomWidth: 2,
+    borderColor: colors.lightgrey,
   },
 });
 
