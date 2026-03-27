@@ -20,9 +20,8 @@ import ErrorText from "../../components/ErrorText";
 import RedirectButton from "../../components/RedirectButton";
 import { AuthContext } from "../../context/AuthContext";
 
-const router = useRouter();
-
 export default function LoginPage() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
@@ -120,6 +119,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
+    flex: 1,
     justifyContent: "space-between",
     alignItems: "center",
     paddingInline: 40,

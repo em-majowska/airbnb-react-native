@@ -18,7 +18,7 @@ const Input = ({
         placeholder="password"
         value={value}
         onChangeText={onChangeText}
-        placeholderTextColor={colors.lightgrey}
+        placeholderTextColor={colors.grey}
         secureTextEntry={secureTextEntry}
       />
       <Pressable onPress={() => setHidden(!secureTextEntry)}>
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     height: 100,
     borderColor: colors.lightpink,
     textDecorationStyle: "none",
-    paddingBlock: 5,
+    padding: 5,
   },
 });
 

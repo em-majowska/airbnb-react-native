@@ -10,6 +10,7 @@ import {
 import Header from "../../../components/Header";
 import axios from "axios";
 import RoomOffer from "../../../components/RoomOffer";
+import MapView, { Marker } from "react-native-maps";
 
 const room = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -23,6 +24,8 @@ const room = () => {
           "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/rooms/" +
             id,
         );
+        console.log(response.data.location);
+
         setItem(response.data);
         setIsLoading(false);
       } catch (error) {
@@ -40,11 +43,26 @@ const room = () => {
       {isLoading ? (
         <ActivityIndicator />
       ) : (
-        <ScrollView>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
           <RoomOffer item={item} />
           <Text style={styles.description} numberOfLines={3}>
             {item.description}
           </Text>
+          <MapView
+            style={styles.map}
+            initialRegion={{
+              latitude: 48.856614,
+              longitude: 2.3522219,
+              latitudeDelta: 0.2,
+              longitudeDelta: 0.2,
+            }}>
+            <Marker
+              coordinate={{
+                longitude: item.location[0],
+                latitude: item.location[1],
+              }}
+            />
+          </MapView>
         </ScrollView>
       )}
     </View>
@@ -57,10 +75,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  scrollContainer: {
+    gap: 20,
+  },
   description: {
     paddingInline: 16,
     fontSize: 14,
     lineHeight: 20,
+  },
+  map: {
+    height: 350,
   },
 });
 

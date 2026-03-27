@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
   link: {
     color: colors.grey,
     textAlign: "center",
+    marginBlockStart: 20,
   },
 });
 export default RedirectButton;

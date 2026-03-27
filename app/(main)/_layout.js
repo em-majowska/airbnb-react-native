@@ -13,6 +13,16 @@ export default function Layout() {
         inactiveTintColor: colors.grey,
       }}>
       <Tabs.Screen
+        name="map"
+        options={{
+          title: "Around Me",
+          tabBarIcon: ({ color }) => {
+            return <Feather name="map-pin" size={24} color={color} />;
+          },
+          tabBarLabelStyle: { fontSize: 14 },
+        }}
+      />
+      <Tabs.Screen
         name="home"
         options={{
           title: "Home",
@@ -23,16 +33,7 @@ export default function Layout() {
           tabBarLabelStyle: { fontSize: 14 },
         }}
       />
-      <Tabs.Screen
-        name="map"
-        options={{
-          title: "Around Me",
-          tabBarIcon: ({ color }) => {
-            return <Feather name="map-pin" size={24} color={color} />;
-          },
-          tabBarLabelStyle: { fontSize: 14 },
-        }}
-      />
+
       <Tabs.Screen
         name="profile"
         options={{
