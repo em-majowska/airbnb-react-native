@@ -36,11 +36,12 @@ const rooms = () => {
         style={styles.list}
         data={data}
         keyExtractor={(item) => String(item._id)}
-        renderItem={({ item }) =>
+        ItemSeparatorComponent={() => <View style={styles.separator}></View>}
+        renderItem={({ item, separators }) =>
           isLoading ? (
             <ActivityIndicator />
           ) : (
-            <Link href={`/home/room?id=${item._id}`} style={styles.link}>
+            <Link href={`/home/room?id=${item._id}`}>
               <RoomOffer item={item} />
             </Link>
           )
@@ -59,9 +60,9 @@ const styles = StyleSheet.create({
   list: {
     paddingBlockEnd: "50",
   },
-  link: {
-    borderBottomWidth: 2,
-    borderColor: colors.lightgrey,
+  separator: {
+    height: 1,
+    backgroundColor: colors.lightgrey,
   },
 });
 
