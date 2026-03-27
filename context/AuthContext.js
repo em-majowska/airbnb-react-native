@@ -10,8 +10,8 @@ export const AuthContextProvider = ({ children }) => {
     const loadToken = async () => {
       const token = await AsyncStorage.getItem("aut");
       const id = await AsyncStorage.getItem("aui");
-      setUserToken(token);
-      setUserId(id);
+      token && setUserToken(token);
+      id && setUserId(id);
     };
     loadToken();
   }, []);
@@ -24,6 +24,7 @@ export const AuthContextProvider = ({ children }) => {
   };
   const logout = async () => {
     setUserToken(null);
+    setUserId(null);
     await AsyncStorage.removeItem("aut");
     await AsyncStorage.removeItem("aui");
   };
@@ -33,8 +34,6 @@ export const AuthContextProvider = ({ children }) => {
       value={{
         userId: userId,
         userToken: userToken,
-        setUserId: setUserId,
-        setUserToken: setUserToken,
         login: login,
         logout: logout,
       }}>

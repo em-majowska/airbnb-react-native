@@ -47,8 +47,10 @@ export default function SignupPage() {
           },
         );
 
-        login(response.data.token, response.data.id);
-        router.navigate("home/rooms");
+        if (response.data.token) {
+          login(response.data.token, response.data.id);
+          router.navigate("home/rooms");
+        }
       } catch (error) {
         error.message && setErrorMessage(error.message);
         if (error.response) {
